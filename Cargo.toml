@@ -5,7 +5,7 @@ publish = false
 edition = "2021"
 license = "0BSD"
 description = "Native Irodori Table connector extension for Firebird."
-repository = "https://github.com/hjosugi/irodori-extension-firebird"
+repository = "https://github.com/irodori-table/irodori-extension-firebird"
 readme = "README.md"
 include = [
   "Cargo.toml",
@@ -24,7 +24,7 @@ name = "irodori_extension_firebird"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-irodori-connector-abi = { git = "https://github.com/hjosugi/irodori-kit", tag = "v0.7.2" }
+irodori-connector-abi = { git = "https://github.com/irodori-table/irodori-kit", tag = "v0.7.2" }
 firebird-wire = "0.1.6"
 serde_json = "1"
 
