@@ -104,7 +104,7 @@ dependencies = [
 
 [[package]]
 name = "irodori-extension-firebird"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "firebird-wire",
  "irodori-connector-abi",
