@@ -272,15 +272,7 @@ impl FirebirdConfig {
     }
 
     fn redact(&self, message: &str) -> String {
-        self.redaction_values
-            .iter()
-            .fold(message.to_string(), |message, secret| {
-                if secret.is_empty() {
-                    message
-                } else {
-                    message.replace(secret, "****")
-                }
-            })
+        abi::redact(message, &self.redaction_values)
     }
 }
 
@@ -557,7 +549,7 @@ fn firebird_value_to_json(value: FbValue) -> Value {
         FbValue::Float(value) => json!(value),
         FbValue::Double(value) => json!(value),
         FbValue::Text(value) => Value::String(value),
-        FbValue::Bytes(value) => Value::String(format!("0x{}", hex_encode(&value))),
+        FbValue::Bytes(value) => Value::String(format!("0x{}", abi::hex_encode(&value))),
         FbValue::Blob(value) => json!({"blobId": value.to_string()}),
         FbValue::Array(value) => json!({"arrayId": value.to_string()}),
         FbValue::Date(_) => value
@@ -711,10 +703,6 @@ fn push_json_string(object: &mut Map<String, Value>, key: &str, value: String) {
     if let Some(values) = object.get_mut(key).and_then(Value::as_array_mut) {
         values.push(Value::String(value));
     }
-}
-
-fn hex_encode(bytes: &[u8]) -> String {
-    bytes.iter().map(|byte| format!("{byte:02x}")).collect()
 }
 
 fn connection(connection_id: &str) -> Result<FirebirdConnection, IrodoriConnectorBuffer> {
